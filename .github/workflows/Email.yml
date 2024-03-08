@@ -1,0 +1,28 @@
+name: Email Notification Workflow
+'on':
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Echo "Hello World"
+        run: echo "Hello World"
+      - name: Get Commit Author Email
+        run: >-
+          echo "::set-env name=COMMIT_AUTHOR_EMAIL::$(git log -1
+          --pretty=format:'%ae')"
+      - name: Send Email Notification
+        uses: dawidd6/action-send-mail@v2
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: '${{ secrets.GMAIL_USERNAME }}'
+          password: '${{ secrets.GMAIL_PASSWORD }}'
+          subject: Commit Notification
+          to: '${{ env.COMMIT_AUTHOR_EMAIL }}'
+          from: maneemunjal@gmail.com
+          body: A new commit has been pushed to the repository. This is an auto-generated message.
