@@ -19,8 +19,8 @@ jobs:
         with:
           server_address: smtp.gmail.com
           server_port: 587
-          username: 'manilmunjal@gmail.com'
-          password: 'mu@230841'
+          username: '${{ secrets.GMAIL_USERNAME }}'
+          password: '${{ secrets.GMAIL_PASSWORD }}'
           subject: Commit Notification
           to: '${{ env.COMMIT_AUTHOR_EMAIL }}'
           from: maneemunjal@gmail.com
